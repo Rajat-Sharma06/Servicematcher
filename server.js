@@ -90,7 +90,7 @@ app.use(express.urlencoded({ extended: true }));
 // }
 
 const serverObj = {
-    host: "btyr6y05je2n8p0ffyag-mysql.services.clever-cloud.com.1",
+    host: "btyr6y05je2n8p0ffyag-mysql.services.clever-cloud.com",
     user: "u0wwwjsoocgavq9a",
     password: "usA1XChUgwIGoZbNT0Zy",
     database: "btyr6y05je2n8p0ffyag",
