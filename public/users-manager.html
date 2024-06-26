@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        var module = angular.module("myModule", []);
+        var controller = module.controller("myController", function($scope, $http) {
+
+            $scope.jsonRecordsAry = [];
+            $scope.doFetchAll = function() {
+                let url = "/angular-fetch-all";
+                $http.get(url).then(success, errors);
+
+                function success(response) {
+                    $scope.jsonRecordsAry = response.data;
+                }
+
+                function errors(response) {
+                    alert(response.data);
+                }
+            }
+
+            $scope.doDelete = function(selemailid) {
+                if (confirm("R U Sure?") == false)
+                    return;
+                // alert(emailid);
+                //let url="/angular-delete?emailkuch="+selemailid+"&pwd="+selemailid;
+                let url = "/angular-delete?emailkuch=" + selemailid;
+                $http.get(url).then(success, errors);
+
+                function success(response) {
+                    alert(response.data);
+                }
+
+                function errors(response) {
+                    alert(response.data);
+                }
+            }
+
+            $scope.doResume = function(emailid, status) {
+
+                let url = "/resume?emailkuch=" + emailid + "&status=" + status;
+
+                $http.get(url).then(success, errors);
+
+                function success(response) {
+                    alert(response.data);
+                }
+
+                function errors(response) {
+                    alert(response.data);
+                }
+
+            }
+
+        })
+    </script>
+
+    <style>
+        body {
+            background-color: #e3a645cd;
+            ;
+        }
+        
+        #form {
+            background-color: #FDB849;
+            ;
+        }
+    </style>
+</head>
+
+<body ng-app="myModule" ng-controller="myController" ng-init="doFetchAll();">
+    <div class="text-center m-3">
+        <h3>List of all the Users</h3>
+        <div class="m-5 align-left">
+            <table cellpadding="10" class="table table-bordered table-striped " rules="all ">
+                <tr>
+                    <th>Email</th>
+                    <th>pwd</th>
+                    <th>userType</th>
+                    <th>Status</th>
+                    <th>Date_of_signup</th>
+                    <th colspan="2">Operations</th>
+
+                </tr>
+                <tr ng-repeat="obj in jsonRecordsAry ">
+                    <td>{{obj.emailid}}</td>
+                    <td>{{obj.password}}</td>
+                    <td>{{obj.usertype}}</td>
+                    <td>{{obj.status}}</td>
+                    <td>{{obj.dos}}</td>
+
+                    <th>
+                        <a href="# " ng-click="doDelete(obj.emailid); ">Delete</a>
+
+                    </th>
+                    <th>
+                        <a href="# " ng-click="doResume(obj.emailid,obj.status); ">Blocak/Resume</a>
+
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

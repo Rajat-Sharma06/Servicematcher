@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#btnn").click(function() {
+                if ($("#exampleInputEmail1").val() == "") {
+                    alert("fill email please...");
+                    return;
+                }
+                if ($("#exampleInputPassword1").val() == "") {
+                    alert("fill passowrd please...");
+                    return;
+                }
+                if ($("#sel").val() == "User Type") {
+                    alert("Select User Type please...");
+                    return;
+
+                }
+
+
+
+                let obj = {
+                    type: "get",
+                    url: "/signup-save",
+                    data: {
+                        kuchbhiemail: $("#exampleInputEmail1").val(),
+                        kuchbhipass: $("#exampleInputPassword1").val(),
+                        kuchbhisel: $("#sel").val()
+                    }
+                }
+
+
+                // alert(kuchbhiemail);
+
+                // alert(kuchbhiemail);
+                $.ajax(obj).done(function(resp) {
+                    alert(resp);
+                }).fail(function(err) {
+                    alert("Error=" + err);
+                });
+
+            })
+            $("#btnn2").click(function() {
+                var kuchemail = $("#floatingInput").val();
+                var kuchpass = $("#floatingPassword").val();
+                let obj1 = {
+                    type: "get",
+                    url: "/login",
+                    data: {
+                        kuchemail: kuchemail,
+                        kuchpass: kuchpass
+                    }
+                }
+                $.ajax(obj1).done(function(resp) {
+                    alert(resp);
+                    if (resp == "Customer") {
+
+                        localStorage.setItem("user", kuchemail);
+                        location.href = "customer-dash.html";
+                    } else
+                    if (resp == "Service-provider") {
+
+                        localStorage.setItem("user", kuchemail);
+                        location.href = "service-provider-dash.html"
+
+                    }
+                }).fail(function(err) {
+                    alert("Error=" + err);
+                });
+            })
+
+            $("#exampleInputEmail1").keyup(function() {
+                let a = $("#exampleInputEmail1").val();
+                var r = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; //regular expression for validation of email
+                if (r.test(a) == false) {
+                    $("#erremail").html("invalid").remove("ok").addClass("not-ok");
+                    $("#btnn").prop("disabled", true);
+                } else {
+                    $("#erremail").html("valid").addClass("ok").removeClass("not-ok");
+                    $("#btnn").prop("disabled", false);
+                }
+            })
+            $("#exampleInputPassword1").keyup(function() {
+                let a = $("#exampleInputPassword1").val();
+                var r = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/; //regular expression for validation of password
+                if (r.test(a) == false) {
+                    $("#errpass").html("invalid").remove("ok").addClass("not-ok");
+                    $("#btnn").prop("disabled", true);
+                } else {
+                    $("#errpass").html("valid").addClass("ok").removeClass("not-ok");
+                    $("#btnn").prop("disabled", false);
+                }
+            })
+
+
+        })
+    </script>
+    <style>
+        .ok {
+            color: green;
+        }
+        
+        .not-ok {
+            color: red;
+        }
+        
+        #form1 {
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+        
+        #form2 {
+            height: 430px;
+            width: 380px;
+            display: none;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+        
+        body {
+            background-image: url();
+            background-color: #F8EFE2;
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+        }
+        
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        
+        #bb {
+            border-radius: 0px 0px 15px 15px;
+            opacity: 85%;
+            background-color: #F8EFE2;
+        }
+        
+        #bb2 {
+            border-radius: 0px 0px 15px 15px;
+            background-color: #F8EFE2;
+            background-image: linear-gradient(135deg, #004558 0%, #9599E2 100%);
+        }
+        
+        .navbar {
+            background-color: #F8EFE2;
+        }
+        
+        #first {
+            overflow-x: hidden;
+        }
+        
+        #r {
+            background-color: #F36E4B;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body class="">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <div class="row">
+        <nav class="navbar  text-dark fixed-top">
+            <div class="container-fluid">
+
+                <a class="navbar-brand"></a>
+
+
+                <p class="txt fs-3 lead">
+
+                    <h3> www.maddie.com</h3>
+                </p>
+                <form class=" d-flex " role="search ">
+
+                    <button id="bt" type="button" class="btn btn-outline-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Signup
+        </button> &nbsp; &nbsp; &nbsp;
+
+                    <button type="button" class="btn btn-outline-dark rounded-pill " data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Login</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators ">
+            <button type="button " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true " aria-label="Slide 1"></button>
+            <button type="button " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="uploads/close-up-cutting-plant-leaves.jpg " class="d-block w-100" style="height:100vh; " alt="... ">
+                <div class="carousel-caption d-none d-md-block ">
+                    <h5>First slide label</h5>
+                    <p>Some representative placeholder content for the first slide.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="uploads/hand-holding-small-house-with-tree-growing-out-it.jpg" class="d-block w-100" style="height:100vh; " alt="... ">
+                <div class="carousel-caption d-none d-md-block ">
+                    <h5>Second slide label</h5>
+                    <p>Some representative placeholder content for the second slide.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="uploads/pexels-tima-miroshnichenko-6195129.jpg" class="d-block w-100" style="height:100vh; " alt="... ">
+                <div class="carousel-caption d-none d-md-block ">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the third slide.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button " data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon " aria-hidden="true "></span>
+            <span class="visually-hidden ">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button " data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true "></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+
+    <div class="text-center  text-dark fs-1 lead">
+        Our Services
+    </div>
+
+
+    </nav>
+
+    <div class="row  row-cols-md-3 bg-light px-3 pt-5 pb-4">
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow mb-4 mx-auto" style="width: 18rem;">
+                <img src="uploads/carpenter-working-woodworking.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text text-center">
+                        Carpenters</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4">
+
+
+            <div class="card border-0 shadow mb-4 mx-auto" style="width: 18rem;">
+                <img src="uploads/male-electrician-works-switchboard-with-electrical-connecting-cable (1).jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text text-center">
+
+
+                        Electricians </p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="col-md-4">
+
+
+            <div class="card border-0 shadow mb-4 mx-auto" style="width: 18rem;">
+                <img src="uploads/plumbing-repair-service.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text text-center">
+                        Plumbers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row  row-cols-md-3 bg-light px-3 pt-4 pb-5">
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow mb-4 mx-auto" style="width: 18rem;">
+                <img src="uploads/close-up-cutting-plant-leaves.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text  text-center">
+
+                        Gardener</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow mb-4 mx-auto" style="width: 18rem;">
+                <img src="uploads/young-girl-is-wearing-yellow-gloves-while-cleaning-kichen-room-with-duster-her-house.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text text-center">
+
+                        Maid</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow mb-4 mx-auto" style="width: 18rem;">
+                <img src="uploads/man-renovating-his-house-with-design-space.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text text-center">
+
+                        Painter</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Team 1 - Bootstrap Brain Component -->
+    <section class="bg-light py-3 py-md-5 py-xl-8 pb-5">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+                    <h2 class="mb-4 display-5 text-center">Our Team</h2>
+                    <p class="text-secondary mb-5 text-center lead fs-4">We are a group of innovative, experienced, and proficient teams. You will love to collaborate with us.</p>
+                    <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row row-cols-2 overflow-hidden">
+            <div class="col">
+                <div class="col-12 col-md-6 col-lg-4 mx-auto ps-3">
+                    <div class="card border-0 border-bottom border-primary shadow-sm overflow-hidden">
+                        <div class="card-body p-0">
+                            <figure class="m-0 p-0">
+                                <img class="img-fluid" loading="lazy" src="/pics/Bce (1).jpeg" alt="Taytum Elia">
+                                <figcaption class="m-0 p-2">
+                                    <h4 class="mb-1">Rajesh Bansal</h4>
+                                    <p class="text-secondary mb-0">Guider</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-5 px-4">Rajesh K. Bansal (SCJP-Sun Certified Java Programmer) 20 Years experience in Training & Development. Founder of realJavaOnline .com, loves coding in Java(J2SE, J2EE), C++,PHP, Python, AngularJS, Android,MERN Stack ( MongoDB , Express ,
+                    ReactJS ,NodeJS). If you like tutorials and want to know more in depth about Java , buy his book "Real Java" available on amazon.in. #Email : bcebti@gmail.com #Contact : 98722-46056</p>
+            </div>
+            <div class="col">
+                <div class="col-12 col-md-6 col-lg-4 m-auto pe-3">
+                    <div class="card border-0 border-bottom border-primary shadow-sm overflow-hidden">
+                        <div class="card-body p-0">
+                            <figure class="m-0 p-0">
+                                <img class="img-fluid" loading="lazy" src="/pics/rajat.jpeg" alt="Taytum Elia">
+                                <figcaption class="m-0 p-2">
+                                    <h4 class="mb-1">Rajat Sharma</h4>
+                                    <p class="text-secondary mb-0">Developer</p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                </div>
+                <p class="mt-5 px-4">A web developer's job is to create websites. While their primary role is to ensure the website is visually appealing and easy to navigate, many web developers are also responsible for the website's performance and capacity.</p>
+            </div>
+        </div>
+
+
+
+
+    </section>
+
+
+    <div class="row bg-dark text-light">
+        <div class="col-lg-5 mt-5 pt-3 mb-5">
+            <p class="fs-1 text-center lead mb-5">
+                Contact Us
+            </p>
+            <p class="text-center mb-3">
+                <i class="fa fa-phone fa-lg pe-2" aria-hidden="true"></i>+91 9877098427
+            </p>
+            <p class="text-center mb-3">
+                <i class="fa fa-envelope fa-lg pe-2" aria-hidden="true"></i>sharmarajat4954@gmail.com
+            </p>
+            <p class="text-center">
+                <i class="fa fa-map-marker fa-lg pe-2" aria-hidden="true"></i>YDoE Talwandi Sabo, Bathinda
+            </p>
+        </div>
+        <div class="col-lg-7"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.0643404821417!2d75.0868045746795!3d29.97758087495729!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39112913c266edd9%3A0x150d7e1d63249852!2sYadavindra%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1709974970325!5m2!1sen!2sin"
+                class="col-md-12 w-100 h-100" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+    </div>
+    <div class="col-12 bg-light text-center py-4">If you have any questions about the program, you may reach out to us at support <b>sharmarajat4954@gmail.com</b></div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1 " aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div id="form1" class="modal-content rounded-4 m-auto " style="width: 430px; ">
+                <div class="modal-header ">
+                    <h5 class="modal-title " id="staticBackdropLabel">Sign Up Modal</h5>
+                    <button type="button " class="btn-close" data-bs-dismiss="modal" aria-label="Close "></button>
+                </div>
+                <div id="bb" class="modal-body  bg-opacity-75 ">
+
+
+
+                    <form>
+
+                        <h3>Create Your Account...</h3>
+                        <div class="mt-3 ">
+                            <label for="exampleInputEmail1 " class="form-label ">Email address</label><span>(<span
+                  id="erremail">*</span>)</span>
+                            <input type="text" name="textemail" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp " placeholder="name@example.com ">
+
+
+
+                            <label for="exampleInputEmail1 " class="form-label "> <i>We' ll never share your email with anyone else.
+                            </i>   </label>
+                        </div>
+
+                        <div class="mt-3 ">
+                            <label for="exampleInputPassword1" class="form-label ">Password</label><span>(<span
+                  id="errpass">*</span>)</span>
+                            <input name="txtpass" type="password " class="form-control " id="exampleInputPassword1" placeholder="Enter a Strog Password ">
+                        </div>
+
+
+                        <div class="mt-3 ">
+                            <select id="sel" name="txtsel " class="form-select mb-5 " aria-label="Default select example ">
+                <option selected>User Type</option>
+                <option value="Service-provider">Service-provider</option>
+                <option value="Customer">Customer</option>
+              </select>
+
+
+                            <div class="pt-4 ">
+
+                                <div class="modal-footer ">
+                                    <button type="button " class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                                    <button id="btnn" type="button " class="btn btn-outline-secondary btn-light ">Sign Up</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade " id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false " tabindex="-1 " aria-labelledby="staticBackdropLabel" aria-hidden="true ">
+        <div class="modal-dialog ">
+            <div id="form2 " class="modal-content rounded-4 m-auto " style="width: 430px; ">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="staticBackdropLabel">Log In Modal</h5>
+                    <button type="button " class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="bb" class="modal-body bg-opacity-75 ">
+
+
+
+
+                    <h3>Log In to Your Account...</h3>
+                    <div class="mt-4 ">
+
+
+                        <div class="mt-4 ">
+                            <div class="form-floating mb-3 ">
+                                <input type="email " class="form-control " id="floatingInput" placeholder="name@example.com ">
+                                <label for="floatingInput ">Email address</label>
+                            </div>
+                            <div class="form-floating ">
+                                <input type="password" class="form-control " id="floatingPassword" placeholder="Password ">
+                                <label for="floatingPassword ">Password</label>
+                            </div>
+
+                        </div>
+
+                        <div class="pt-4 ">
+
+                            <div class="modal-footer ">
+                                <button type="button " class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                                <button id="btnn2" type="button " class="btn btn-outline-secondary btn-light ">Log In</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+</body>
+
+</html>
+
+</html>

@@ -1,0 +1,16 @@
+{
+    "folders": [
+		{
+			"path": "C:/Users/phoenix/Desktop/coding/datastructure.cpp"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "C:/Users/phoenix/Dropbox/Nodejs-Dec-2023/BCEserver"
+		}
+	],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "ProjectBce"
+    }
+}

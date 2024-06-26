@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        var module = angular.module("myModule", []);
+        var controller = module.controller("myController", function($scope, $http) {
+
+
+
+
+            $scope.doFill = function(index) {
+
+                $scope.selObj = $scope.jsonRecordsAry[index];
+            }
+
+
+
+
+            $scope.doLocation = function() {
+                //alert(JSON.stringify($scope.selPwd));
+
+                let url = "/fetch-location";
+                $http.get(url).then(success, errors);
+
+                function success(response) {
+                    $scope.jsonRecordsAry = response.data;
+
+
+                }
+
+                function errors(response) {
+                    alert(response.data);
+                }
+
+            }
+
+
+            $scope.doCategory = function() {
+                //alert(JSON.stringify($scope.selPwd));
+
+                let url = "/fetch-category";
+                $http.get(url).then(success, errors);
+
+                function success(response) {
+                    $scope.jsonAry = response.data;
+
+
+                }
+
+                function errors(response) {
+                    alert(response.data);
+                }
+
+            }
+
+
+            $scope.docheck = function() {
+                //alert(JSON.stringify($scope.selPwd));
+
+
+                $scope.loc = $scope.selPwd1.plocation;
+                $scope.cat = $scope.selPwd2.pcategory;
+                let url = "/fetch-data?lockuch=" + $scope.selPwd1.plocation + "&catkuch=" + $scope.selPwd2.pcategory;
+                $http.get(url).then(success, errors);
+
+                $scope.jsonRecordsArys = [];
+
+                function success(response) {
+                    $scope.jsonRecordsArys = response.data;
+
+
+                }
+
+                function errors(response) {
+                    alert(response.data);
+                }
+
+            }
+
+
+            $scope.doShowDetails = function(index) {
+                //alert(index);
+                //alert(JSON.stringify($scope.jsonRecordsAry[index]));
+
+                $scope.selObj1 = $scope.jsonRecordsArys[index];
+
+
+            }
+
+
+        })
+    </script>
+
+    <style>
+        body {
+            background-color: #F8EFE2;
+            background-image: linear-gradient( 135deg, #fadfb4b8 1%, white 100%);
+            overflow-x: hidden;
+        }
+        
+        .card-body {
+            background: #F8EFE2;
+        }
+    </style>
+</head>
+
+<body ng-app="myModule" ng-controller="myController" ng-init="doLocation();doCategory();">
+    <div class="row mx-2 mt-4 ">
+        <div class="col-md-5">
+            All cities :
+            <select class=" form-select form-select-md" id=" cit " ng-options="obj.plocation for obj in jsonRecordsAry " ng-model="selPwd1 ">
+                <option value="">Select</option>
+             </select>
+
+
+        </div>
+
+        <div class="col-md-5 ">
+            All Category:
+            <select class="form-select form-select-md " id=" cat " ng-options="obj.pcategory for obj in jsonAry " ng-model="selPwd2 ">
+                <option value="">Select</option>
+               
+             </select>
+        </div>
+        <div class="col-2 mt-4">
+            <button id="btnn1 " type="button " (click)="onClickForm " class="btn btn-outline-secondary btn-light float " ng-click="docheck(); ">Search</button>
+        </div>
+    </div>
+
+
+
+
+    <form action=" ">
+        <div class="row row-cols-md-3 mt-5 mx-3 ">
+            <div ng-repeat="obj2 in jsonRecordsArys " class="col mt- ">
+
+                <div>
+                    <div class="card h-100 ">
+
+                        <div class="card-body ">
+                            <center>
+                                <img src="uploads/{{obj2.pid}} " alt=" " height="70 " width="70 ">
+                                <p>Email:{{obj2.pemailid}}</p>
+                                <p>Name:{{obj2.pname}}</p>
+                                <p>City:{{obj2.plocation}}</p>
+                                <div class="card-footer text-center ">
+                                    <a href="# " class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#detailsModal" ng-click="doShowDetails($index); ">Show Full Details</a>
+                                </div>
+                            </center>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+
+    <!--  modal -->
+    <!-- create table usersProfile(fname varchar(30), lname varchar(30), emailid varchar(30), state varchar(15), city varchar(15), number varchar(13), address varchar(30),pic varchar(30)); -->
+    <div class="modal fade " id="detailsModal" tabindex="-1 " aria-labelledby="exampleModalLabel " aria-hidden="true ">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <center>
+                    <div class="modal-header  ">
+
+                        <h1 class="modal-title fs-5" id="exampleModalLabel ">FULL DETAIL's</h1>
+                    </div>
+                    <div class="row ">
+                        <div class="col mt- ">
+
+                            <div>
+                                <div class="card h-99% w-99%">
+                                    <div class="card-body ">
+
+                                        <img src="uploads/{{selObj1.pid}} " alt=" " height="150 " width="150 ">
+                                        <p>Email:{{selObj1.pemailid}}</p>
+                                        <p>Number:{{selObj1.pnumber}}</p>
+                                        <p>Gender:{{selObj1.pgender}}</p>
+                                        <p>Category:{{selObj1.pcategory}}</p>
+                                        <p>Firm:{{selObj1.pfirm}}</p>
+                                        <p>Website:{{selObj1.pwebsite}}</p>
+                                        <p>Address:{{selObj1.plocation}}</p>
+                                        <p>Date:{{selObj1.psince}}</p>
+                                        <div class="card-footer text-center "></div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

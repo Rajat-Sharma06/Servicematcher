@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#btnn").click(function() {
+                if ($("#exampleInputEmail1").val() == "") {
+                    alert("fill email please...");
+                    return;
+                }
+                if ($("#exampleInputPassword1").val() == "") {
+                    alert("fill passowrd please...");
+                    return;
+                }
+                if ($("#sel").val() == "User Type") {
+                    alert("Select User Type please...");
+                    return;
+
+                }
+
+
+
+                let obj = {
+                    type: "get",
+                    url: "/signup-save",
+                    data: {
+                        kuchbhiemail: $("#exampleInputEmail1").val(),
+                        kuchbhipass: $("#exampleInputPassword1").val(),
+                        kuchbhisel: $("#sel").val()
+                    }
+                }
+
+
+                // alert(kuchbhiemail);
+
+                // alert(kuchbhiemail);
+                $.ajax(obj).done(function(resp) {
+                    alert(resp);
+                }).fail(function(err) {
+                    alert("Error=" + err);
+                });
+
+            })
+            $("#btnn2").click(function() {
+                var kuchemail = $("#floatingInput").val();
+                var kuchpass = $("#floatingPassword").val();
+                let obj1 = {
+                    type: "get",
+                    url: "/login",
+                    data: {
+                        kuchemail: kuchemail,
+                        kuchpass: kuchpass
+                    }
+                }
+                $.ajax(obj1).done(function(resp) {
+
+                    if (resp == "Customer") {
+
+                        localStorage.setItem("user", kuchemail);
+                        location.href = "customer-dash.html";
+                    } else {
+                        location.href = "service-provider-dash.html"
+
+                    }
+                }).fail(function(err) {
+                    alert("Error=" + err);
+                });
+            })
+
+            $("#exampleInputEmail1").keyup(function() {
+                let a = $("#exampleInputEmail1").val();
+                var r = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; //regular expression for validation of email
+                if (r.test(a) == false) {
+                    $("#erremail").html("invalid");
+                    $("#btnn").prop("disabled", true);
+                } else {
+                    $("#erremail").html("valid");
+                    $("#btnn").prop("disabled", false);
+                }
+            })
+            $("#exampleInputPassword1").keyup(function() {
+                let a = $("#exampleInputPassword1").val();
+                var r = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/; //regular expression for validation of password
+                if (r.test(a) == false) {
+                    $("#errpass").html("invalid");
+                    $("#btnn").prop("disabled", true);
+                } else {
+                    $("#errpass").html("valid");
+                    $("#btnn").prop("disabled", false);
+                }
+            })
+
+
+        })
+    </script>
+    <style>
+        #menu01-0 {
+            background-color: rgb(79, 82, 102);
+        }
+        
+        #form1 {
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+        
+        #form2 {
+            height: 430px;
+            width: 380px;
+            display: none;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+        
+        body {
+            background-image: url(WhatsApp\ Image\ 2024-01-30\ at\ 8.37.03\ PM.jpeg);
+        }
+        
+        #bb {
+            border-radius: 0px 0px 15px 15px;
+            background-color: #03d7e2;
+            background-image: linear-gradient(135deg, #03bede 0%, #9599E2 100%);
+        }
+        
+        #bb1 {
+            border-radius: 0px 0px 15px 15px;
+            background-color: #004558;
+            background-image: linear-gradient(135deg, #004558 0%, #9599E2 100%);
+        }
+        
+        a:hover {
+            color: rgb(169, 26, 26);
+            background: white;
+            background-size: 25%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
+    <!-- <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand"></a>
+            <form class="d-flex" role="search">
+
+                <button id="bt" type="button" class="btn btn-outline-primary rounded-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Signup
+        </button> &nbsp; &nbsp; &nbsp;
+
+                <button type="button" class="btn btn-outline-primary rounded-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop2 ">Login</button>
+            </form>
+        </div>
+    </nav> -->
+
+
+
+
+    <section data-bs-version="5.1" class="menu menu01 cid-sRQYwJBxrf" once="menu" id="menu01-0">
+
+        <nav class="navbar navbar-dropdown navbar-expand-lg">
+            <div class="container-fluid">
+                <div class="navbar-brand">
+
+                    <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-5" href="#">Kids Daycare</a></span>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#staticBackdrop" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                        <li class="nav-item">
+                            <a class="nav-link link text-secondary display-7" href="#" aria-expanded="false">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link text-secondary text-primary display-7" href="index.html#slider03-6">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link text-secondary text-primary display-7" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <button id="bt" type="button" class="btn   rounded-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Signup
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-outline-secondary rounded-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop2 ">Login</button>
+                        </li>
+                    </ul>
+                    <h4 class="mbr-section-subtitle mbr-fonts-style addr display-7">
+                        <i>developed by rd..</i>
+                        <br> City,Bathinda
+                    </h4>
+                    <div class="navbar-buttons align-center mbr-section-btn"><a class="btn btn-primary display-4" href="index.html#form03-5">CONTACT</a></div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div id="form1" class="modal-content rounded-4 m-auto " style="width: 430px; ">
+                <div class="modal-header ">
+                    <h5 class="modal-title " id="staticBackdropLabel">Sign Up Modal</h5>
+                    <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close "></button>
+                </div>
+                <div id="bb" class="modal-body bg-success bg-opacity-75 ">
+
+
+
+                    <form>
+
+                        <h3>Create Your Account...</h3>
+                        <div class="mt-4">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label><span>(<span
+                  id="erremail">*</span>)</span>
+                            <input type="text" name="textemail" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp " placeholder="name@example.com ">
+
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+
+                        <div class="mt-4 ">
+                            <label for="exampleInputPassword1" class="form-label">Password</label><span>(<span
+                  id="errpass">*</span>)</span>
+                            <input name="txtpass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter a Strog Password">
+                        </div>
+
+
+                        <div class="mt-4 ">
+                            <select id="sel" name="txtsel" class="form-select mb-5 " aria-label="Default select example ">
+                <option selected>User Type</option>
+                <option value="Service-provider">Service-provider</option>
+                <option value="Customer">Customer</option>
+              </select>
+
+
+                            <div class="pt-4">
+
+                                <div class="modal-footer ">
+                                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                                    <button id="btnn" type="button" class="btn btn-outline-secondary btn-light ">Sign Up</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static " data-bs-keyboard="false " tabindex="-1 " aria-labelledby="staticBackdropLabel " aria-hidden="true ">
+        <div class="modal-dialog ">
+            <div id="form1" class="modal-content rounded-4 m-auto " style="width: 430px; ">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="staticBackdropLabel ">Log In Modal</h5>
+                    <button type="button " class="btn-close " data-bs-dismiss="modal" aria-label="Close "></button>
+                </div>
+                <div id="bb1" class="modal-body bg-opacity-75 ">
+
+
+
+
+                    <h3>Log In to Your Account...</h3>
+                    <div class="mt-4 ">
+
+
+                        <div class="mt-4 ">
+                            <div class="form-floating mb-3 ">
+                                <input type="email" class="form-control " id="floatingInput" placeholder="name@example.com ">
+                                <label for="floatingInput ">Email address</label>
+                            </div>
+                            <div class="form-floating ">
+                                <input type="password " class="form-control " id="floatingPassword" placeholder="Password ">
+                                <label for="floatingPassword">Password</label>
+                            </div>
+
+                        </div>
+
+                        <div class="pt-4 ">
+
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                                <button id="btnn2" type="button" class="btn btn-outline-secondary btn-light ">Log In</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+</body>
+
+</html>

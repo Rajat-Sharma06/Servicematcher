@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+
+            let user = localStorage.getItem("user");
+            $("#active").html(user);
+            // $("#settingsmail").val(user);
+            $("#settingsmail").click(function() {
+                // localStorage.remove("user");
+                location.href = "index.html";
+            })
+
+            $("#savv").click(function() {
+                let obj1 = {
+                    type: "get",
+                    url: "/save-pr",
+                    data: {
+                        email: $("#exampleInputEmail1").val(),
+                        category: $("#exampleInputtype").val(),
+                        address: $("#exampleInputadd").val(),
+                        city: $("#exampleInputcity").val(),
+                        upto: $("#exampleInputdate").val(),
+                        task: $("#exampleInputtask").val(),
+                    }
+                }
+                $.ajax(obj1).done(function(resp) {
+                    alert(resp);
+                }).fail(function(err) {
+                    alert(err);
+                })
+
+            })
+
+
+            $("#addCheck1").click(function() {
+                let obj2 = {
+                    type: "get",
+                    url: "/ssearch",
+                    data: {
+                        kuchbhiemail: $("#exampleInputEmail1").val(),
+                    }
+                }
+
+                $.ajax(obj2).done(function(resp) {
+                    $("#exampleInputadd").val(resp[0].address);
+                    $("#exampleInputcity").val(resp[0].city);
+                }).fail(function(err) {
+                    alert(err);
+                })
+            })
+
+            $("#addCheck2").click(function() {
+                $("#exampleInputadd").val("");
+                $("#exampleInputcity").val("");
+            })
+
+
+            $("#savvv").click(function() {
+
+                let obj3 = {
+                    type: "get",
+                    url: "/changepass",
+                    data: {
+
+                        email: $("#exampleInputEmail3").val(),
+                        oldpass: $("#exampleInputold").val(),
+                        newpass: $("#exampleInputnew").val(),
+
+                    }
+                }
+                $.ajax(obj3).done(function(resp) {
+                    alert(resp);
+                }).fail(function(err) {
+                    alert(err);
+                })
+            })
+
+
+            $("#exampleInputnew").keyup(function() {
+                let a = $("#exampleInputnew").val();
+                var r = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;; //regular expression for validation of password
+                if (r.test(a) == false) {
+                    $("#errpass").html("invalid").remove("ok ").addClass("not-ok");
+                    $("#savvv").prop("disabled", true);
+
+                } else {
+                    $("#errpass").html("valid").addClass("ok").removeClass("not-ok");
+                    $("#savvv").prop("disabled", false);
+
+                }
+            })
+        })
+    </script>
+    <style>
+        .ok {
+            color: green;
+        }
+        
+        .not-ok {
+            color: red;
+        }
+        
+        body {
+            background-color: rgb(236, 236, 236);
+        }
+        
+        #card2,
+        #card3,
+        #card4,
+        #card5 {
+            overflow: hidden;
+            transform: scale(.9);
+            transition-duration: .6s;
+        }
+        
+        #card1:hover {
+            translate: 55px;
+            transition-duration: .25s;
+            transform: scale(1.05);
+        }
+        
+        #card2:hover {
+            translate: 55px;
+            transition-duration: .25s;
+            transform: scale(1.05);
+        }
+        
+        #card3:hover {
+            translate: 55px;
+            transition-duration: .25s;
+            transform: scale(1);
+        }
+        
+        #card4:hover {
+            translate: 55px;
+            transition-duration: .25s;
+            transform: scale(1);
+        }
+        
+        #card5:hover {
+            translate: 55px;
+            transition-duration: .25s;
+            transform: scale(1);
+        }
+        
+        .col {
+            transform: scale(.8);
+            transition-duration: .35s;
+        }
+        
+        .col:hover {
+            transform: scale(1);
+            transition-duration: .35s;
+        }
+        
+        .card {
+            background-color: white;
+            background-image: linear-gradient(130deg, #F8EFE2 25%, #F8EFE2 25%);
+        }
+        
+        #form1,
+        #settingsmail {
+            background-color: #F8EFE2;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <center>
+        <h2 class="m-0" style="background-color:#F8EFE2; ;">
+
+
+            Service provider Dashboard</h2>
+        <h4>
+            <marquee class="pb-1 " behavior="" direction="" style="background-color:#F8EFE2; " onmouseenter="stop()" onmouseleave="start()">welcome..
+                <!--style="background-color:rgb(253, 161, 111); color:white" -->
+                <span id="active">*</span></marquee>
+        </h4>
+    </center>
+
+    <div class="row row-cols-1 row-cols-md-4 mx-1">
+        <div class="col " id="card">
+            <div class="card h-100">
+                <img src="/pics/post.avif" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Post Your Service</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="/provider-profile">
+                        <div class="text-center">
+                            Click Here
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col">
+            <div class="card h-100">
+                <img src="/pics/setting.jfif" class="card-img-top " alt="... ">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Setting</h5>
+
+                </div>
+                <div class="card-footer text-center">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+        Click Here
+        </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <img src="/pics/manage.png" class="card-img-top " alt="... ">
+
+                <div class="card-body">
+                    <h5 class="card-title text-center">Requirement-Manager</h5>
+
+                </div>
+                <div class="card-footer text-center ">
+                    <a href="/service-manager">
+        Click Here
+      </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <img src="/pics/proofile.jfif" class="card-img-top " alt="... ">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Find Job</h5>
+
+                </div>
+                <div class="card-footer text-center ">
+                    <a href="/job">
+        Click Here
+      </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <center>
+        <input type="button" id="settingsmail" value="Logout " class="btn mb-5 float">
+    </center>
+    <!-- Modal -->
+    <form>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" id="form1">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Post Requirement</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputtype" class="form-label">Task Category/Type of Work</label>
+                            <input type="text" class="form-control" id="exampleInputtype">
+                        </div>
+                        <div class="mb-3">
+                            <input type="radio" name="add" class="form-check-input" id="addCheck1">
+                            <label class="form-check-label" for="addCheck1">Home</label> &nbsp; &nbsp;
+                            <input type="radio" name="add" class="form-check-input" id="addCheck2">
+                            <label class="form-check-label" for="addCheck2">Other Location</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputadd" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="exampleInputadd">
+                        </div>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="exampleInputcity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="exampleInputcity"></div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputdate" class="form-label">Up to</label>
+                                    <input type="date" class="form-control" id="exampleInputdate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputtask" class="form-label">Work to be Done</label>
+                            <textarea class="form-control" id="exampleInputtask"></textarea>
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="button" id="savv" value="Save" class="btn btn-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <!-- Modal -->
+    <form>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" id="form1">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail3" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail3">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputold" class="form-label">Enter old password</label>
+                            <input type="password" class="form-control" id="exampleInputold">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputnew" class="form-label">Enter new password</label><span>(<span
+                                id="errpass">*</span>)</span>
+                            <input type="password" class="form-control" id="exampleInputnew">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="button" id="savvv" value="Save" class="btn btn-light">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+
+
+
+</body>
+
+</html>
